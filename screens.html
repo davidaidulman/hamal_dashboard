@@ -109,7 +109,7 @@ body.proj .exit{display:block}
   </div>
   <div class="screen">
     <div class="cap"><i style="background:var(--gold)"></i>מסך 2 — לוח ההודעות <em>לפטופים בחמ״ל</em></div>
-    <div class="bezel"><iframe id="f2" src="./" title="לוח ההודעות"></iframe></div>
+    <div class="bezel"><iframe id="f2" src="index.html" title="לוח ההודעות"></iframe></div>
   </div>
 </div>
 
@@ -128,7 +128,7 @@ function fit() {
       /* חצי מסך של 1920 הוא 960 פיקסל — צר מספיק כדי שהדפים יחליפו לפריסת
          טלפון והמפה תתיישב מתחת לרשימה. לכן מרנדרים אותם ברוחב "וירטואלי"
          של 1280 ומקטינים בדיוק לחצי המסך: הפריסה נשארת של מחשב, בלי שוליים. */
-      var vw = Math.max(1280, b.clientWidth);
+      var vw = Math.max(1100, b.clientWidth);
       var kk = b.clientWidth / vw;
       f.style.width = vw + "px";
       f.style.height = Math.round(b.clientHeight / kk) + "px";
@@ -150,7 +150,11 @@ function proj(on) {
   fit();
   /* טעינה מחדש אחרי שינוי הגודל — כך כל דף מחשב את הפריסה שלו לממדים
      החדשים מאפס, בלי שאריות מהתצוגה הקודמת. הפתיחה מיידית (המפתח שמור). */
-  document.querySelectorAll(".bezel iframe").forEach(function (f) { f.src = f.src; });
+  /* במצב הקרנה המפה נטענת עם big=1 — גופנים וסימונים גדולים לקיר */
+  document.querySelectorAll(".bezel iframe").forEach(function (f) {
+    var base = f.src.split("?")[0];
+    f.src = (on && /wall\.html$/.test(base)) ? base + "?big=1" : base;
+  });
   setTimeout(fit, 80); setTimeout(fit, 600);
   if (on && document.documentElement.requestFullscreen)
     document.documentElement.requestFullscreen()["catch"](function () {});
@@ -204,7 +208,7 @@ $("#proj").onclick = function () { proj(true); };
 $("#exit").onclick = function () { proj(false); };
 $("#oMap").onclick  = function () { var a = area(); var w = pop("wall.html", "hamal_map",
   feat(a.l + a.w * .08, a.t + a.h * .06, a.w * .84, a.h * .84)); if (!w) say("הדפדפן חסם את החלון — אשר חלונות קופצים לאתר הזה.", 1); };
-$("#oDash").onclick = function () { var a = area(); var w = pop("./", "hamal_dash",
+$("#oDash").onclick = function () { var a = area(); var w = pop("index.html", "hamal_dash",
   feat(a.l + a.w * .08, a.t + a.h * .06, a.w * .84, a.h * .84)); if (!w) say("הדפדפן חסם את החלון — אשר חלונות קופצים לאתר הזה.", 1); };
 
 /* שני חלונות, זה לצד זה, חצי מסך כל אחד. אם יש מקרן מחובר והדפדפן מרשה
@@ -220,7 +224,7 @@ $("#both").onclick = async function () {
         var pri = sc[0], sec = sc[1];
         for (var i = 0; i < sc.length; i++) if (sc[i].isPrimary) { pri = sc[i]; sec = sc[1 - i] || sc[1]; }
         map  = pop("wall.html", "hamal_map",  feat(sec.availLeft, sec.availTop, sec.availWidth, sec.availHeight));
-        dash = pop("./",        "hamal_dash", feat(pri.availLeft, pri.availTop, pri.availWidth, pri.availHeight));
+        dash = pop("index.html",        "hamal_dash", feat(pri.availLeft, pri.availTop, pri.availWidth, pri.availHeight));
         place(map,  sec.availLeft, sec.availTop, sec.availWidth, sec.availHeight);
         place(dash, pri.availLeft, pri.availTop, pri.availWidth, pri.availHeight);
         if (map && dash) { say("המפה על המסך השני, הלוח על הראשי. במפה לחץ “מצב הקרנה”."); return; }
@@ -233,7 +237,7 @@ $("#both").onclick = async function () {
     var a = area(), half = Math.floor(a.w / 2);
     /* בעברית קוראים מימין לשמאל, ולכן המפה בחצי הימני כמו בתצוגה שלמטה */
     map  = pop("wall.html", "hamal_map",  feat(a.l + half, a.t, half, a.h));
-    dash = pop("./",        "hamal_dash", feat(a.l,        a.t, half, a.h));
+    dash = pop("index.html",        "hamal_dash", feat(a.l,        a.t, half, a.h));
     place(map,  a.l + half, a.t, half, a.h);
     place(dash, a.l,        a.t, half, a.h);
     msg = (map && dash)
