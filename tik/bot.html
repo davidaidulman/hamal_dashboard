@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>יוסי כדורעף · הדגמה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#22303A;--ink2:#4A5A66;--navy:#183447;--teal:#2A7F8E;--line:#D5DFE5;--bg:#F4F7F9;
+ --wa-bg:#EFEAE2;--wa-in:#FFFFFF;--wa-out:#D9FDD3;--wa-head:#008069;--wa-ink:#111B21;--wa-mut:#667781}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Rubik,Arial,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:28px;align-items:start}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}}
+h1{margin:0;font-size:30px;font-weight:700;color:var(--navy);line-height:1.2}
+.sub{color:var(--teal);font-weight:500;margin:6px 0 18px}
+h2{font-size:16px;font-weight:600;color:var(--navy);margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+p{margin:0 0 10px;color:#33424D}
+ul{margin:0;padding-inline-start:18px;color:#33424D}li{margin:4px 0}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:6px 0 4px}
+.stats div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stats b{display:block;font-size:20px;color:var(--navy)}.stats span{font-size:12.5px;color:var(--ink2)}
+.stack{color:var(--ink2);font-size:13.5px;direction:ltr;text-align:right}
+/* phone */
+.phone{position:sticky;top:16px;background:#111;border-radius:34px;padding:10px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.scr{background:var(--wa-bg);border-radius:26px;overflow:hidden;height:720px;display:flex;flex-direction:column;font-family:"Segoe UI",Arial,sans-serif}
+.wh{background:var(--wa-head);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.wh .av{width:36px;height:36px;border-radius:50%;background:#7FCBB8;display:flex;align-items:center;justify-content:center;font-weight:700}
+.wh b{display:block;font-size:15px}.wh span{font-size:12px;opacity:.85}
+.chat{flex:1;overflow:auto;padding:10px 10px 14px;display:flex;flex-direction:column;gap:6px}
+.day{align-self:center;background:#fff;color:var(--wa-mut);font-size:12px;padding:3px 10px;border-radius:8px;margin:6px 0;box-shadow:0 1px .5px rgba(0,0,0,.1)}
+.m{max-width:86%;background:var(--wa-in);color:var(--wa-ink);border-radius:8px;padding:6px 9px 4px;font-size:14px;line-height:1.45;box-shadow:0 1px .5px rgba(0,0,0,.13);align-self:flex-start;white-space:pre-wrap;animation:pop .25s ease}
+.m.me{align-self:flex-end;background:var(--wa-out)}
+.m.bot{border-inline-start:3px solid #25D366}
+.m .who{display:block;font-size:12.5px;font-weight:600;margin-bottom:1px}
+.m .tm{display:block;text-align:left;font-size:11px;color:var(--wa-mut);margin-top:2px}
+.m .tag{color:#027EB5}
+.poll{min-width:240px}.poll .q{font-weight:600;margin-bottom:6px}
+.opt{margin:6px 0}.opt .r{display:flex;justify-content:space-between;font-size:13.5px}
+.opt .bar{height:5px;background:#E2E8EB;border-radius:3px;margin-top:3px;overflow:hidden}.opt .bar i{display:block;height:100%;width:0;background:#25D366;transition:width .5s}
+.react{display:inline-block;background:#fff;border-radius:10px;padding:0 5px;font-size:13px;margin-top:2px;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ctrl{display:flex;gap:8px;padding:8px 10px;background:#F0F2F5;border-top:1px solid #DDD}
+.ctrl button{flex:1;border:0;border-radius:18px;padding:8px;font:600 13px Rubik,Arial;cursor:pointer;background:#fff;color:var(--navy)}
+.ctrl button.go{background:var(--wa-head);color:#fff}
+.ribbon{position:fixed;left:12px;bottom:12px;background:#183447;color:#fff;font:600 12px/1.2 Rubik,Arial;padding:7px 12px;border-radius:999px;opacity:.92;pointer-events:none;z-index:9}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main>
+    <h1>יוסי כדורעף</h1>
+    <div class="sub">פרויקט אישי · בוט וואטסאפ שמנהל קבוצת כדורעף</div>
+    <p>בקבוצה של כ-20 שחקנים מישהו היה צריך כל שבוע לפתוח הרשמה, לספור, לרדוף אחרי מי שלא ענה ולחפש משלימים כשחסרים שחקנים. העבודה הזו תמיד נפלה על אותו אדם. בניתי בוט שעושה את כל זה לבד, בתוך הקבוצה עצמה.</p>
+    <div class="stats">
+      <div><b>0 ₪</b><span>עלות חודשית, רץ 24/7 בענן</span></div>
+      <div><b>600</b><span>בדיקות אוטומטיות לפני כל עדכון</span></div>
+      <div><b>~6,000</b><span>שורות קוד ב-26 מודולים</span></div>
+    </div>
+
+    <h2>הדרישות שהגדרתי מראש</h2>
+    <ul>
+      <li>הכל בתוך הוואטסאפ: בלי קישורים, בלי אתר ובלי אפליקציה.</li>
+      <li>הרשמה בלחיצה על סקר, בלי להכריח אף אחד לכתוב.</li>
+      <li>רץ תמיד, בלי שהמחשב שלי דלוק, ובחינם.</li>
+      <li>לא מציק: לא עונה על כל הודעה ולא מתייג בלילה.</li>
+    </ul>
+
+    <h2>מה הבוט עושה</h2>
+    <ul>
+      <li><b>סקר שבועי</b> לשני האימונים, מוצמד לראש הקבוצה.</li>
+      <li><b>תיוג רק של מי שלא ענה</b>, כדי שאנשים לא ישתיקו את הקבוצה.</li>
+      <li><b>משלימים באישור מנהל</b> כשחסרים שחקנים: רק אישור של בעל הבוט מוסיף להרכב.</li>
+      <li><b>מבין את השפה של הקבוצה</b>: „כמה אנחנו?” או „יש מספיק?” מקבלים תשובה עם המספרים.</li>
+      <li><b>שליטה רק לבעלים</b>, ונעילה שמונעת מאחרים לחבר את הבוט לקבוצה שלהם.</li>
+    </ul>
+
+    <h2>האתגרים</h2>
+    <p><b>הצבעות מוצפנות.</b> ההצבעות בסקר וואטסאפ מוצפנות, והפענוח בספרייה היה מנוטרל. כתבתי פענוח משלי, ואם הוא נכשל הבוט עובר לבד להרשמה באימוג׳י ומודיע בקבוצה.</p>
+    <p><b>להריץ 24/7 בחינם.</b> שלושה ספקי ענן נפלו בדרך. מה שאפשר לעבור ביניהם בקלות הייתה ההחלטה להוציא את כל המצב מהשרת למסד נתונים, כך שהשרת עצמו הפך לחד-פעמי.</p>
+    <p><b>הלקח הכי גדול.</b> אף אחד לא כתב בקבוצה את הניסוח שתכננתי. כתבו „כמה אנחנו?” ו„יש מספיק?”. אז במקום ללמד את הקבוצה לדבר כמו הבוט, לימדתי את הבוט לדבר כמוהם.</p>
+
+    <h2>טכנולוגיות</h2>
+    <div class="stack">Node.js · Baileys (WhatsApp) · MongoDB Atlas · Render · Docker · GitHub · cron-job.org</div>
+  </main>
+
+  <aside class="phone">
+    <div class="scr">
+      <div class="wh"><div class="av">🏐</div><div><b>כדורעף · קבוצת הדגמה</b><span>יוסי כדורעף, נועם, איתי, שחר, עידו ועוד 16</span></div></div>
+      <div class="chat" id="chat"></div>
+      <div class="ctrl"><button class="go" id="play">▶ הפעלת שבוע לדוגמה</button><button id="fast">דילוג לסוף</button></div>
+    </div>
+  </aside>
+</div>
+<div class="ribbon">גרסת הדגמה · שמות ושיחה מומצאים</div>
+<script>
+(function(){
+var BOT="יוסי כדורעף";
+var S=[
+ ["day","יום שני"],
+ ["bot","שבוע חדש! מי מגיע לאימונים? 🏐\nסמנו בסקר — אפשר את שניהם.","15:00"],
+ ["poll"],
+ ["vote",[3,1,0]],["m","נועם","אני על שניהם 💪","15:04"],["vote",[7,4,1]],["vote",[9,6,2]],
+ ["day","יום רביעי"],
+ ["bot","תזכורת לסקר 🙏\n@איתי @עידו @רועי @אלון @דניאל — עוד לא ענו","18:00"],
+ ["m","איתי","סורי, סימנתי עכשיו","18:06"],["vote",[11,7,2]],
+ ["m","שחר","@יוסי כדורעף כמה אנחנו?","20:31"],
+ ["bot","שלישי: 11 · חמישי: 7 · לא מגיעים: 2\nלחמישי חסרים 3 כדי להגיע ל-10 🙂","20:31"],
+ ["day","יום חמישי"],
+ ["bot","לאימון היום חסרים 3 שחקנים.\nמישהו מביא חבר? כתבו „יש לי חבר”.","12:00"],
+ ["m","תומר","יש לי חבר","12:09"],
+ ["bot","@דוד יש אישור למשלים של תומר?","12:09"],
+ ["me","דוד","👍","12:15"],
+ ["bot","המשלים של תומר נוסף להרכב ✅\nחמישי: 8 + 1 משלים · חסרים עוד 1","12:15"],
+ ["m","עידו","אני מצטרף בסוף","13:40"],["vote",[11,9,2]],
+ ["bot","תהנו באימון היום! 🏐","19:50"],
+ ["m","נועם","@יוסי כדורעף איפה האימון?","19:52"],
+ ["bot","באולם השכונתי, כמו תמיד 📍","19:52"]
+];
+var chat=document.getElementById("chat"),i=0,t=null,poll=null;
+function bubble(cls,who,txt,tm){var d=document.createElement("div");d.className="m "+cls;
+ d.innerHTML=(who?'<span class="who" style="color:'+(cls.indexOf("bot")>=0?"#06A884":"#C14B78")+'">'+who+"</span>":"")+txt.replace(/@[֐-׿ ]+?(?=[\s—]|$)/g,function(x){return '<span class="tag">'+x+"</span>"})+(tm?'<span class="tm">'+tm+"</span>":"");
+ chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
+function makePoll(){var d=document.createElement("div");d.className="m bot poll";
+ d.innerHTML='<span class="who" style="color:#06A884">'+BOT+'</span><div class="q">📊 אימונים השבוע</div>'+
+ ["שלישי 20:00","חמישי 20:00","לא מגיע 😴"].map(function(o){return '<div class="opt"><div class="r"><span>○ '+o+'</span><b>0</b></div><div class="bar"><i></i></div></div>'}).join("")+
+ '<span class="tm">15:00 · 📌 מוצמד</span>';chat.appendChild(d);poll=d;chat.scrollTop=chat.scrollHeight}
+function vote(v){if(!poll)return;var max=Math.max(1,v[0],v[1],v[2]);poll.querySelectorAll(".opt").forEach(function(o,k){o.querySelector("b").textContent=v[k];o.querySelector("i").style.width=Math.round(v[k]/20*100)+"%"})}
+function step(){if(i>=S.length){stop();return false}var x=S[i++];
+ if(x[0]==="day"){var d=document.createElement("div");d.className="day";d.textContent=x[1];chat.appendChild(d)}
+ else if(x[0]==="bot")bubble("bot",BOT,x[1],x[2]);
+ else if(x[0]==="m")bubble("",x[1],x[2],x[3]);
+ else if(x[0]==="me")bubble("me","",x[2],x[3]);
+ else if(x[0]==="poll")makePoll();
+ else if(x[0]==="vote")vote(x[1]);
+ chat.scrollTop=chat.scrollHeight;return true}
+function stop(){clearInterval(t);t=null;document.getElementById("play").textContent="↺ שוב מההתחלה"}
+function reset(){chat.innerHTML="";i=0;poll=null}
+document.getElementById("play").onclick=function(){if(t){stop();return}if(i>=S.length)reset();this.textContent="⏸ עצירה";t=setInterval(step,1100);step()};
+document.getElementById("fast").onclick=function(){if(t)clearInterval(t);t=null;while(step());stop()};
+reset();for(var k=0;k<3;k++)step();
+})();
+</script>
+</body>
+</html>

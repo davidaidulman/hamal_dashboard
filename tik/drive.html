@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>הורדה מ-Drive לדיסק און קי · הדגמה</title>
+<style>
+:root{--navy:#0B2E5B;--navyl:#1B4B8A;--ink:#14202E;--mut:#6E7D91;--bg:#EFF2F6;--card:#fff;--dropbg:#F6F9FC;--dropon:#E2EEFA;--line:#C9D3DF}
+*{box-sizing:border-box}
+html,body{margin:0;background:#DDE3EA;font:14px/1.4 "Segoe UI",Assistant,Arial,sans-serif;color:var(--ink)}
+.page{max-width:960px;margin:0 auto;padding:22px 16px 60px}
+.intro{background:#fff;border:1px solid #D5DCE5;border-radius:12px;padding:12px 16px;margin-bottom:16px;color:#3A4B5F;font-size:14px}
+.intro b{color:var(--navy)}
+.win{background:var(--bg);border:1px solid #9AA8B8;border-radius:8px;box-shadow:0 18px 50px rgba(11,46,91,.25);overflow:hidden;margin-bottom:26px}
+.tb{display:flex;align-items:center;gap:10px;background:#fff;border-bottom:1px solid #D5DCE5;height:32px;padding:0 10px;font-size:12.5px}
+.tb .ic{width:16px;height:16px;border-radius:3px;background:var(--navy)}
+.tb .ctl{margin-inline-start:auto;display:flex;gap:18px;color:#555;direction:ltr}
+.hd{background:var(--navy);color:#fff;padding:10px 22px;display:flex;align-items:center;justify-content:space-between;min-height:74px}
+.hd .e{font-size:11.5px;color:#8BADD1}.hd .t{font-size:19px;font-weight:700}.hd .s{font-size:12px;color:#A9C4E0}
+.hd button{background:var(--navyl);color:#fff;border:1px solid #8BADD1;border-radius:3px;padding:7px 12px;font:600 13px inherit;font-family:inherit;cursor:pointer}
+.bd{padding:16px 22px 18px}
+.drop{border:2px dashed var(--navyl);background:var(--dropbg);text-align:center;padding:16px 10px;cursor:pointer}
+.drop:hover{background:var(--dropon)}
+.drop b{display:block;color:var(--navy);font-size:17px}.drop span{color:var(--mut);font-size:13px}
+.row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.row label{width:78px;flex:none}
+.row input[type=text],.row select{flex:1;min-width:160px;height:28px;border:1px solid #9AA8B8;background:#fff;padding:0 6px;font:inherit}
+.btn{height:28px;padding:0 12px;border:1px solid #9AA8B8;background:var(--card);border-radius:2px;font:inherit;cursor:pointer;color:var(--ink)}
+.btn:disabled{color:#A3ADB9;cursor:default}
+.btn.pri{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700;height:32px;padding:0 18px}
+.btn.pri:disabled{background:#8798AE;border-color:#8798AE;color:#E8EDF3}
+.src{font-size:12.5px;color:var(--mut);margin-top:6px;min-height:18px}
+.chk{display:flex;align-items:center;gap:6px;margin-top:8px}
+table{width:100%;border-collapse:collapse;background:#fff;margin-top:10px;font-size:13px;border:1px solid #9AA8B8}
+th,td{border:1px solid #D5DCE5;padding:4px 8px;text-align:right}
+th{background:#F3F5F8;font-weight:600}
+td.n{direction:ltr;text-align:right}
+tr.sel td{background:#CCE3F7}
+.empty td{color:var(--mut);text-align:center;height:120px}
+.hint{font-size:11.5px;color:var(--mut);margin-top:4px}
+.acts{display:flex;justify-content:flex-start;gap:8px;margin-top:8px;flex-direction:row-reverse}
+.pb{height:14px;border:1px solid #9AA8B8;background:#E6E6E6;margin-top:10px;position:relative;overflow:hidden}
+.pb i{position:absolute;inset:0 auto 0 0;width:0;background:#06B025;transition:width .2s}
+.st{margin-top:6px;min-height:20px}
+.log{height:96px;overflow:auto;background:#fff;border:1px solid #9AA8B8;margin-top:6px;padding:4px 6px;font-size:12.5px;white-space:pre-wrap}
+.warn{background:#FBE9E7;border:1px solid #EBC4BF;color:#8E2323;padding:8px 10px;margin-top:10px;font-size:13px}
+.fsn{font-size:12.5px;color:var(--mut)}
+#usb{display:none}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="intro"><b>הדגמה של כלי ווינדוס.</b> הכלי האמיתי הוא תוכנה קטנה למחשב (PowerShell עם חלון גרפי). כאן אפשר לראות איך הוא נראה ועובד, עם תיקיות וקבצים מומצאים. שום דבר לא יורד ושום דיסק לא מאותחל.</div>
+
+  <div class="win" id="main">
+    <div class="tb"><span class="ic"></span>הורדת חומרים מ-Google Drive<span class="ctl">—&nbsp;&nbsp;☐&nbsp;&nbsp;✕</span></div>
+    <div class="hd">
+      <div><div class="e">כלי פנימי למטה · גרסת הדגמה</div><div class="t">הורדת חומרים מ-Google Drive</div><div class="s">הכל רץ ברקע — אפשר להמשיך לעבוד במחשב בזמן ההורדה</div></div>
+      <button id="openUsb">ניקוי ואתחול דיסקים</button>
+    </div>
+    <div class="bd">
+      <div class="drop" id="drop"><b id="dropT">גררו לכאן את הדוח</b><span>קובץ PDF, או כל קובץ טקסט עם קישורים. בהדגמה: לחיצה כאן טוענת דוח לדוגמה.</span></div>
+      <div class="row"><label>קישור:</label><input type="text" id="link" placeholder="https://drive.google.com/drive/folders/…"><button class="btn" id="load">טעינה</button><button class="btn" id="pick">בחירת קובץ מהמחשב…</button></div>
+      <div class="src" id="src"></div>
+      <div class="row"><label>כונן:</label><select id="drive"><option>E:\  דיסק און קי ●  ·  28.6 ג׳יגה פנויים</option><option>F:\  דיסק און קי ●  ·  14.2 ג׳יגה פנויים</option><option>C:\  מקומי  ·  112 ג׳יגה פנויים</option></select><button class="btn">רענון כוננים</button></div>
+      <div class="row"><label>לשמור אל:</label><input type="text" id="dest" value="E:\חומרים לשטח"><button class="btn">בחירת תיקייה…</button></div>
+      <div class="chk"><input type="checkbox" id="flat"><label for="flat">לשמור הכל בתיקייה אחת, בלי תיקיות משנה</label></div>
+      <table><thead><tr><th style="width:50%">תיקייה</th><th>קבצים</th><th>גודל</th><th>הערה</th></tr></thead><tbody id="rows"><tr class="empty"><td colspan="4">עדיין לא נטען דוח</td></tr></tbody></table>
+      <div class="hint">לחיצה כפולה על שורה — שינוי שם התיקייה שתיווצר אצלך</div>
+      <div class="acts"><button class="btn pri" id="start" disabled>התחלה</button><button class="btn" id="stop" disabled>עצירה</button><button class="btn" id="ren" disabled>שינוי שם</button><button class="btn" id="open" disabled>פתיחת התיקייה</button></div>
+      <div class="pb"><i id="bar"></i></div>
+      <div class="st" id="stat">גררו דוח לחלון, או הדביקו קישור.</div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <div class="win" id="usb">
+    <div class="tb"><span class="ic"></span>ניקוי ואתחול דיסקים<span class="ctl">—&nbsp;&nbsp;☐&nbsp;&nbsp;<a href="#" id="closeUsb" style="color:inherit;text-decoration:none">✕</a></span></div>
+    <div class="hd" style="min-height:66px"><div><div class="t">ניקוי ואתחול דיסקים נשלפים</div><div class="s">מוצגים כאן רק כוננים נשלפים. כונן פנימי לא מופיע ולא ייגע.</div></div></div>
+    <div class="bd">
+      <table><thead><tr><th style="width:34px"></th><th>כונן</th><th>תווית</th><th>נפח</th><th>מצב</th></tr></thead>
+      <tbody id="urows"></tbody></table>
+      <div class="row"><button class="btn">רענון רשימה</button><button class="btn" id="uall">סימון הכל</button><span class="fsn" id="ucnt"></span></div>
+      <div class="row"><label style="width:96px">מערכת קבצים:</label><select id="ufs" style="flex:none;width:120px"><option>exFAT</option><option>FAT32</option><option>NTFS</option></select><span class="fsn" id="ufsn"></span></div>
+      <div class="row"><label style="width:96px">תווית:</label><input type="text" id="ulb" value="USB" style="flex:none;width:160px;direction:ltr"><div class="chk" style="margin:0"><input type="checkbox" id="unum" checked><label for="unum">להוסיף מספר רץ (USB 1, USB 2…)</label></div></div>
+      <div class="chk"><input type="checkbox" id="ufull"><label for="ufull">אתחול מלא (איטי) — עובר על כל הנפח ובודק אותו. בלי הסימון: אתחול מהיר, שניות בודדות.</label></div>
+      <div class="chk"><input type="checkbox" id="ucopy" checked><label for="ucopy">להעתיק תיקייה אחרי האתחול</label><input type="text" value="E:\חומרים לשטח" style="flex:1;height:26px;border:1px solid #9AA8B8;margin-inline-start:8px"></div>
+      <div class="chk"><input type="checkbox" id="uej" checked><label for="uej">לפלוט את הדיסק בסיום</label></div>
+      <div class="warn">כל התוכן בכוננים המסומנים יימחק. בהדגמה הזו שום דבר לא נמחק באמת.<div class="chk"><input type="checkbox" id="uok"><label for="uok">אני מאשר: כל התוכן בכוננים המסומנים יימחק, ואי אפשר לשחזר אותו.</label></div></div>
+      <div class="acts"><button class="btn pri" id="ugo" disabled>התחלה</button><button class="btn" id="ustop" disabled>עצירה</button></div>
+      <div class="pb"><i id="ubar"></i></div>
+      <div class="log" id="ulog"></div>
+    </div>
+  </div>
+</div>
+<div style="position:fixed;left:12px;bottom:12px;z-index:9;pointer-events:none;background:#183447;color:#fff;font:600 12px/1.2 Assistant,Arial,sans-serif;padding:7px 12px;border-radius:999px;opacity:.92">גרסת הדגמה · כל השמות והנתונים מומצאים</div>
+<script>
+(function(){
+var $=function(s){return document.getElementById(s)};
+var FOLDERS=[
+ {n:"סרטוני הדרכה",files:["פתיחת אירוע במערכת.mp4","הוספת תומך.mp4","שינוי סטטוס.mp4","יום הבחירות — מה עושים.mp4","טיפים לממריצים.mp4","שאלות נפוצות.mp4"],mb:2380},
+ {n:"כרזות ושלטים",files:["כרזה A3 — גרסה 1.pdf","כרזה A3 — גרסה 2.pdf","שלט רחוב.pdf","פלייר דו-צדדי.pdf","סטיקר 10x10.pdf","רולאפ.pdf","באנר לרשת.png","פוסט ריבועי.png"],mb:412},
+ {n:"הקלטות למסרים",files:["מסר בוקר.mp3","מסר צהריים.mp3","מסר ערב.mp3","תזכורת הצבעה.mp3"],mb:54},
+ {n:"טפסים ותבניות",files:["תבנית קליטת מתנדבים.xlsx","טופס הרשמה לאירוע.pdf","רשימת ציוד לקלפי.pdf"],mb:3},
+ {n:"מסמכי Google",files:[],mb:0,note:"2 מסמכי Google — לא ניתנים להורדה"}];
+var loaded=false,running=false,timer=null,sel=-1;
+function log(el,t){var l=$(el);l.textContent+=t+"\n";l.scrollTop=l.scrollHeight}
+function fmt(mb){return mb>=1024?(mb/1024).toFixed(1)+" ג׳יגה":mb+" מ״ב"}
+function paint(){var h="";FOLDERS.forEach(function(f,i){h+='<tr data-i="'+i+'"'+(i===sel?' class="sel"':'')+'><td>'+f.n+'</td><td class="n">'+f.files.length+'</td><td>'+(f.mb?fmt(f.mb):"—")+'</td><td>'+(f.note||"")+'</td></tr>'});$("rows").innerHTML=h}
+function load(label){if(running)return;loaded=true;$("dropT").textContent=label;$("src").textContent="מקור הקישורים: "+label+" · נמצאו 5 תיקיות ו-21 קבצים";paint();$("start").disabled=false;$("ren").disabled=false;
+ $("stat").textContent="נמצאו 21 קבצים להורדה · "+fmt(2849)+". בוחרים כונן ולוחצים התחלה.";log("log","נקרא הדוח: "+label);log("log","דולגו 2 מסמכי Google — הם לא קבצים אמיתיים, ולכן מופיעים ברשימה ולא נעלמים בשקט.")}
+$("drop").onclick=function(){load("דוח חומרים לשבוע — דוגמה.pdf")};
+$("load").onclick=function(){load("קישור שהודבק")};
+$("pick").onclick=function(){load("דוח חומרים לשבוע — דוגמה.pdf")};
+$("drive").onchange=function(){var d=this.value.slice(0,2);$("dest").value=d+"\\חומרים לשטח"};
+$("rows").ondblclick=function(e){var tr=e.target.closest("tr[data-i]");if(!tr)return;rename(+tr.getAttribute("data-i"))};
+$("rows").onclick=function(e){var tr=e.target.closest("tr[data-i]");if(!tr)return;sel=+tr.getAttribute("data-i");paint()};
+function rename(i){var f=FOLDERS[i];var v=prompt("שם התיקייה שתיווצר אצלך:",f.n);if(v){f.n=v.trim()||f.n;paint()}}
+$("ren").onclick=function(){if(sel<0){$("stat").textContent="בחרו שורה בטבלה, ואז שינוי שם.";return}rename(sel)};
+$("start").onclick=function(){if(!loaded||running)return;running=true;$("start").disabled=true;$("stop").disabled=false;$("open").disabled=true;
+ var all=[];FOLDERS.forEach(function(f){f.files.forEach(function(x){all.push([f.n,x])})});
+ var i=0,done=0,skip=0;log("log","מתחיל: "+all.length+" קבצים אל "+$("dest").value+" · 3 במקביל");
+ timer=setInterval(function(){if(i>=all.length){clearInterval(timer);running=false;$("stop").disabled=true;$("start").disabled=false;$("open").disabled=false;
+   $("stat").textContent="הסתיים · ירדו "+done+" קבצים, "+skip+" דולגו כי כבר היו שם בגודל הנכון · כל קובץ נבדק מול הגודל המקורי.";log("log","נכתב יומן: _לוג הורדה.txt");return}
+  var f=all[i];if(i===3||i===11){skip++;log("log","דולג (כבר קיים, גודל תקין): "+f[0]+"\\"+f[1])}else{done++;log("log","ירד: "+f[0]+"\\"+f[1])}
+  i++;$("bar").style.width=Math.round(i/all.length*100)+"%";$("stat").textContent="מוריד "+i+" מתוך "+all.length+" · "+f[1]},420)};
+$("stop").onclick=function(){if(!running)return;clearInterval(timer);running=false;$("stop").disabled=true;$("start").disabled=false;$("stat").textContent="נעצר. בהרצה הבאה ההורדה תמשיך מאותה נקודה — מה שכבר ירד לא יורד שוב.";log("log","נעצר על ידי המשתמש")};
+$("open").onclick=function(){$("stat").textContent="בכלי האמיתי נפתחת כאן התיקייה בסייר הקבצים."};
+
+/* ---- ניקוי ואתחול ---- */
+var DR=[{d:"E:",l:"USB DISK",s:"29.8 ג׳יגה",c:true},{d:"F:",l:"KINGSTON",s:"14.9 ג׳יגה",c:true},{d:"G:",l:"NO NAME",s:"7.4 ג׳יגה",c:false}];
+function upaint(){$("urows").innerHTML=DR.map(function(x,i){return '<tr><td><input type="checkbox" data-u="'+i+'"'+(x.c?" checked":"")+'></td><td>'+x.d+'</td><td style="direction:ltr;text-align:right">'+x.l+'</td><td>'+x.s+'</td><td id="ust'+i+'">'+(x.st||"מוכן")+'</td></tr>'}).join("");
+ var n=DR.filter(function(x){return x.c}).length;$("ucnt").textContent="מסומנים: "+n+" מתוך "+DR.length;ugate()}
+function ugate(){$("ugo").disabled=!($("uok").checked&&DR.some(function(x){return x.c}))}
+$("urows").onchange=function(e){var i=e.target.getAttribute("data-u");if(i!=null){DR[i].c=e.target.checked;upaint()}};
+$("uall").onclick=function(){DR.forEach(function(x){x.c=true});upaint()};
+$("uok").onchange=ugate;
+var FSN={exFAT:"exFAT — תומך בקבצים מעל 4 ג׳יגה ונקרא כמעט בכל מכשיר. הבחירה הנכונה לסרטונים.",FAT32:"FAT32 — נקרא בכל מכשיר, אבל קובץ בודד מוגבל ל-4 ג׳יגה. סרטון ארוך לא ייכנס.",NTFS:"NTFS — ווינדוס בלבד. מתאים אם הדיסקים נשארים בתוך המטה."};
+$("ufs").onchange=function(){$("ufsn").textContent=FSN[this.value]};$("ufsn").textContent=FSN.exFAT;
+var ut=null;
+$("ugo").onclick=function(){var list=DR.map(function(x,i){return i}).filter(function(i){return DR[i].c});if(!list.length)return;$("ugo").disabled=true;$("ustop").disabled=false;
+ var steps=["מאתחל ("+$("ufs").value+")","נותן תווית","מעתיק תיקייה","מאמת את ההעתקה","נפלט — אפשר לנתק"],k=0,tot=steps.length;
+ log("ulog","מתחיל: "+list.length+" כוננים במקביל · "+($("ufull").checked?"אתחול מלא":"אתחול מהיר"));
+ ut=setInterval(function(){if(k>=tot){clearInterval(ut);$("ustop").disabled=true;ugate();log("ulog","הסתיים · "+list.length+" דיסקים מוכנים, כל קובץ אומת מול המקור");$("ubar").style.width="100%";return}
+  list.forEach(function(i,j){var lb=$("ulb").value+($("unum").checked?" "+(j+1):"");DR[i].st=steps[k];if(k===1)DR[i].l=lb;log("ulog",DR[i].d+" "+steps[k]+(k===1?" → "+lb:""))});
+  if(!$("ucopy").checked&&(k===1))k+=2;if(!$("uej").checked&&k===tot-2){k++}
+  k++;upaint();$("uok").checked=true;$("ubar").style.width=Math.round(k/tot*100)+"%"},900)};
+$("ustop").onclick=function(){clearInterval(ut);$("ustop").disabled=true;ugate();log("ulog","נעצר")};
+$("openUsb").onclick=function(){$("usb").style.display="block";upaint();$("usb").scrollIntoView({behavior:"smooth"})};
+$("closeUsb").onclick=function(e){e.preventDefault();$("usb").style.display="none"};
+})();
+</script>
+</body>
+</html>
